@@ -4,7 +4,7 @@ Windows VM could not access the Internet
 
 ## Symptoms:
 
-![des]![image.png](attachment:2d50f7b9-5394-4aa5-b890-31d445d46f6d:image.png)
+![image.png](attachment:2d50f7b9-5394-4aa5-b890-31d445d46f6d:image.png)
 No default gateway present in `ipconfig /all` output
 
 No internet in browser
