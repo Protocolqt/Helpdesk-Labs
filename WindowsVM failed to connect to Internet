@@ -1,0 +1,62 @@
+# Issue:
+
+Windows VM could not access the Internet
+
+## Symptoms:
+
+![image.png](attachment:2d50f7b9-5394-4aa5-b890-31d445d46f6d:image.png)
+
+No default gateway present in `ipconfig /all` output
+
+No internet in browser
+
+ping 8.8.8.8 failed
+
+IP address is 169.254.42.141 which means APIPA was assigned
+
+## Root Cause Analysis
+
+The VM was connected to a Host-Only network, which provides a local IP address but does not assign a default gateway. Without a gateway, the system cannot route traffic outside the local network.
+
+## Why It Was Not DNS
+
+Ping to 8.8.8.8 failed, indicating the issue was not name resolution but lack of network routing.
+
+## Why It Was Not DHCP Failure
+
+The system received a valid IP (192.168.56.x), meaning DHCP was functioning within the Host-Only network.
+
+## Network Layer Breakdown
+
+- IP Address: Present ✅
+- Gateway: Missing ❌
+- DNS: Irrelevant due to no routing ❌
+
+## Steps Taken
+
+1. Ran ipconfig → saw APIPA address (169.254.42.141)
+2. Tested connectivity with ping → failed
+3. Checked VirtualBox network settings
+4. Found adapter set to Host-Only instead of NAT
+
+![image.png](attachment:3e567061-a9cf-4544-9224-ad8b9deb424b:image.png)
+
+Noticed the network Adapter was set to Host-only Adapter
+
+## ✅ Resolution
+
+Changed network adapter back to NAT → renewed IP → internet restored
+
+![image.png](attachment:56da81cb-8af3-4261-bdc7-b13335975191:image.png)
+
+Did inconfig /release > ipconfig /renew > gateway established>Connection to internet restore
+
+## Key Concepts
+
+- APIPA (169.254.x.x)
+- DHCP failure
+- VirtualBox network modes (NAT vs Host-Only)
+
+# 🚨 What I Learned
+
+A valid IP address does not guarantee internet access. The absence of a default gateway prevents routing beyond the local network.
