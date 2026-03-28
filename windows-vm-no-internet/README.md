@@ -21,7 +21,7 @@ Restore internet connectivity for a Windows VM.
 ### Network Analysis
 
 - `ipconfig /all` showed no usable default gateway
-- System initially had an APIPA address (169.254.x.x), indicating DHCP was not reached
+- System initially had an APIPA address (169.254.42.141), indicating DHCP was not reached
 - Failure to ping `8.8.8.8` confirmed this was not just a DNS issue
 - This pointed to a Layer 3 connectivity problem rather than application-level failure
 - Checked IP configuration
